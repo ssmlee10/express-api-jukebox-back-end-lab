@@ -35,6 +35,8 @@ router.get("/:songId", async (req, res) => {
   } catch (err) {
     if (res.statusCode === 404) {
         res.json({ err: err.message });
+    } else {
+        res.status(500).json({ err: err.message });
     }
   }
 });
@@ -42,5 +44,22 @@ router.get("/:songId", async (req, res) => {
 // PUT - update - update a track
 
 // DELETE - delete a track
+router.delete('/:songId', async (req, res) => {
+    try {
+        const deletedTrack = await Jukebox.findByIdAndDelete(req.params.songId);
+
+        if (!deletedTrack) {
+            res.status(404);
+            throw new Error('Track not found.');
+        }
+        res.status(200).json(deletedTrack);
+    } catch(err) {
+        if (res.statusCode === 404) {
+            res.json({ err: err.message });
+        } else {
+            res.status(500).json({ err: err.message})
+        }
+    }
+});
 
 module.exports = router;
