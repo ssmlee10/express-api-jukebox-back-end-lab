@@ -19,11 +19,25 @@ router.get("/", async (req, res) => {
     const songList = await Jukebox.find();
     res.status(200).json(songList);
   } catch (err) {
-    res.status(500).json({ err: err.message })
+    res.status(500).json({ err: err.message });
   }
 });
 
 // GET - show - get a single track
+router.get("/:songId", async (req, res) => {
+  try {
+    const song = await Jukebox.findById(req.params.songId);
+    if (!song) {
+      res.status(404);
+      throw new Error("Song not found.");
+    }
+    res.status(200).json(song);
+  } catch (err) {
+    if (res.statusCode === 404) {
+        res.json({ err: err.message });
+    }
+  }
+});
 
 // PUT - update - update a track
 
