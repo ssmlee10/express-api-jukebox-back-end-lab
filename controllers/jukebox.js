@@ -4,7 +4,13 @@ const router = express.Router();
 
 // POST - create a track
 router.post('/', async (req, res) => {
-    res.json({ message: 'create route' });
+    try {
+        // create a new song with data from req.body
+        const createdSong = await Jukebox.create(req.body);
+        res.status(201).json(createdSong);
+    } catch (err) {
+        res.status(500).json({ err: err.message });
+    }
 });
 
 // GET - index - list all tracks
@@ -14,5 +20,6 @@ router.post('/', async (req, res) => {
 // PUT - update - update a track
 
 // DELETE - delete a track
+
 
 module.exports = router;
