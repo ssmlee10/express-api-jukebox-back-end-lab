@@ -18,6 +18,8 @@ app.use(cors());
 app.use(express.json());
 app.use(logger('dev'));
 
+app.use('/jukebox', jukeboxRouter);
+
 app.listen(3000, () => {
     console.log('The express app is ready!');
 });

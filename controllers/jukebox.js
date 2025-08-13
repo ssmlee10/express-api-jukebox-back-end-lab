@@ -3,6 +3,9 @@ const express = require('express');
 const router = express.Router();
 
 // POST - create a track
+router.post('/', async (req, res) => {
+    res.json({ message: 'create route' });
+});
 
 // GET - index - list all tracks
 
